@@ -1,82 +1,58 @@
 fileFormatVersion: 2
-guid: 12ebcf145aafe574fa36a779cc14f9a2
+guid: dfadf4a19ad6f32409e3cb900eb7e9dd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2864494112868743621
-    second: FireIdle_0
+      213: 4457828759315474742
+    second: FireDestroy_0
   - first:
-      213: 7948965620107644384
-    second: FireIdle_1
+      213: -9122706663839168110
+    second: FireDestroy_1
   - first:
-      213: 7267233398140558376
-    second: FireIdle_2
+      213: -6849372096028396397
+    second: FireDestroy_2
   - first:
-      213: 2863347886121776991
-    second: FireIdle_3
+      213: 4010014958774566642
+    second: FireDestroy_3
   - first:
-      213: 7300860461878329791
-    second: FireIdle_4
+      213: 8274321618643895822
+    second: FireDestroy_4
   - first:
-      213: -3771415588426618051
-    second: FireIdle_5
+      213: -1490666935876083452
+    second: FireDestroy_5
   - first:
-      213: -5649282124529446209
-    second: FireIdle_6
+      213: -3744052826218312707
+    second: FireDestroy_6
   - first:
-      213: -7238437087172334867
-    second: FireIdle_7
+      213: 5103287936443544721
+    second: FireDestroy_7
   - first:
-      213: -3985568674897693344
-    second: FireIdle_8
+      213: -6670645436771945862
+    second: FireDestroy_8
   - first:
-      213: 6225343324894696615
-    second: FireIdle_9
+      213: -1930977895687329588
+    second: FireDestroy_9
   - first:
-      213: -4384790495234588658
-    second: FireIdle_10
+      213: -4111755163608791246
+    second: FireDestroy_10
   - first:
-      213: -1631110170962804724
-    second: FireIdle_11
+      213: 1245391934813542819
+    second: FireDestroy_11
   - first:
-      213: -6563249971101675933
-    second: FireIdle_12
+      213: 1311189382616762551
+    second: FireDestroy_12
   - first:
-      213: 7859816120703148606
-    second: FireIdle_13
+      213: -2009059538082622151
+    second: FireDestroy_13
   - first:
-      213: -930530265467849727
-    second: FireIdle_14
+      213: 1146268604000674938
+    second: FireDestroy_14
   - first:
-      213: -8272525237492511693
-    second: FireIdle_15
+      213: 4288668532988300211
+    second: FireDestroy_15
   - first:
-      213: -8915903933847212126
-    second: FireIdle_16
-  - first:
-      213: -828592711133431909
-    second: FireIdle_17
-  - first:
-      213: 8614575380396027979
-    second: FireIdle_18
-  - first:
-      213: 3721264300126082433
-    second: FireIdle_19
-  - first:
-      213: -2825723811571523014
-    second: FireIdle_20
-  - first:
-      213: -1746608380240929715
-    second: FireIdle_21
-  - first:
-      213: -2822093777084418919
-    second: FireIdle_22
-  - first:
-      213: -4226586938412820992
-    second: FireIdle_23
-  - first:
-      213: -7161104545429243759
-    second: FireIdle_24
+      213: 1307379313020193185
+    second: FireDestroy_16
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -176,463 +152,358 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FireIdle_0
+      name: FireDestroy_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 1229
-        width: 221
-        height: 252
+        x: 131
+        y: 1627
+        width: 225
+        height: 254
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b36c245f7c54f38d0800000000000000
-      internalID: -2864494112868743621
+      spriteID: 639e48453a36ddd30800000000000000
+      internalID: 4457828759315474742
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_1
+      name: FireDestroy_1
       rect:
         serializedVersion: 2
-        x: 337
-        y: 1227
-        width: 221
-        height: 252
+        x: 620
+        y: 1627
+        width: 247
+        height: 258
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ed0f46bd16605e60800000000000000
-      internalID: 7948965620107644384
+      spriteID: 29907c79f92a56180800000000000000
+      internalID: -9122706663839168110
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_2
+      name: FireDestroy_2
       rect:
         serializedVersion: 2
-        x: 639
-        y: 1227
-        width: 221
-        height: 252
+        x: 1126
+        y: 1623
+        width: 248
+        height: 246
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82cd50ca5466ad460800000000000000
-      internalID: 7267233398140558376
+      spriteID: 39431c14e5422f0a0800000000000000
+      internalID: -6849372096028396397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_3
+      name: FireDestroy_3
       rect:
         serializedVersion: 2
-        x: 949
-        y: 1229
-        width: 221
-        height: 252
+        x: 1645
+        y: 1626
+        width: 248
+        height: 239
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5777a45bb7acb720800000000000000
-      internalID: 2863347886121776991
+      spriteID: 2feb2c9eb5f66a730800000000000000
+      internalID: 4010014958774566642
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_4
+      name: FireDestroy_4
       rect:
         serializedVersion: 2
-        x: 1241
-        y: 1227
-        width: 221
-        height: 252
+        x: 2117
+        y: 1623
+        width: 264
+        height: 235
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb1c3f098edd15560800000000000000
-      internalID: 7300860461878329791
+      spriteID: e06ca944cab44d270800000000000000
+      internalID: 8274321618643895822
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_5
+      name: FireDestroy_5
       rect:
         serializedVersion: 2
-        x: 33
-        y: 922
-        width: 221
-        height: 252
+        x: 122
+        y: 1161
+        width: 254
+        height: 238
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 1, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 401afa8d156105be0800000000000000
+      internalID: -1490666935876083452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireDestroy_6
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 1178
+        width: 221
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3be57f018d39abc0800000000000000
-      internalID: -3771415588426618051
+      spriteID: dfbc5f89ac37a0cc0800000000000000
+      internalID: -3744052826218312707
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_6
+      name: FireDestroy_7
       rect:
         serializedVersion: 2
-        x: 341
-        y: 922
-        width: 221
-        height: 252
+        x: 1153
+        y: 1189
+        width: 194
+        height: 184
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb25573c6d7b991b0800000000000000
-      internalID: -5649282124529446209
+      spriteID: 194f04ef65582d640800000000000000
+      internalID: 5103287936443544721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_7
+      name: FireDestroy_8
       rect:
         serializedVersion: 2
-        x: 635
-        y: 920
-        width: 221
-        height: 252
+        x: 1636
+        y: 1174
+        width: 235
+        height: 241
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dea6412f1d7eb8b90800000000000000
-      internalID: -7238437087172334867
+      spriteID: a72b0ae515b1d63a0800000000000000
+      internalID: -6670645436771945862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_8
+      name: FireDestroy_9
       rect:
         serializedVersion: 2
-        x: 941
-        y: 920
-        width: 221
-        height: 252
+        x: 2000
+        y: 1044
+        width: 500
+        height: 453
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0657cc8186a60b8c0800000000000000
-      internalID: -3985568674897693344
+      spriteID: cc8ec6aa5d9c335e0800000000000000
+      internalID: -1930977895687329588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_9
+      name: FireDestroy_10
       rect:
         serializedVersion: 2
-        x: 1237
-        y: 924
-        width: 221
-        height: 252
+        x: 0
+        y: 545
+        width: 497
+        height: 452
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a4923d45ccd46650800000000000000
-      internalID: 6225343324894696615
+      spriteID: 23748b5b67c10f6c0800000000000000
+      internalID: -4111755163608791246
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_10
+      name: FireDestroy_11
       rect:
         serializedVersion: 2
-        x: 39
-        y: 624
-        width: 221
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e008805b6481623c0800000000000000
-      internalID: -4384790495234588658
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FireIdle_11
-      rect:
-        serializedVersion: 2
-        x: 347
-        y: 626
-        width: 221
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c004c3601f12d59e0800000000000000
-      internalID: -1631110170962804724
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FireIdle_12
-      rect:
-        serializedVersion: 2
-        x: 639
-        y: 624
-        width: 221
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 36e4464cce6aae4a0800000000000000
-      internalID: -6563249971101675933
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FireIdle_13
-      rect:
-        serializedVersion: 2
-        x: 939
+        x: 573
         y: 625
-        width: 221
-        height: 252
+        width: 356
+        height: 344
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3266626e1da31d60800000000000000
-      internalID: 7859816120703148606
+      spriteID: 3a992b8cd55884110800000000000000
+      internalID: 1245391934813542819
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_14
+      name: FireDestroy_12
       rect:
         serializedVersion: 2
-        x: 1239
-        y: 626
-        width: 221
-        height: 252
+        x: 1045
+        y: 600
+        width: 411
+        height: 391
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 104f90a57a71613f0800000000000000
-      internalID: -930530265467849727
+      spriteID: 7b8c228ebc7423210800000000000000
+      internalID: 1311189382616762551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_15
+      name: FireDestroy_13
       rect:
         serializedVersion: 2
-        x: 35
-        y: 335
-        width: 221
-        height: 252
+        x: 1582
+        y: 601
+        width: 380
+        height: 394
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33c0ecf4026123d80800000000000000
-      internalID: -8272525237492511693
+      spriteID: 93599fb9ef26e14e0800000000000000
+      internalID: -2009059538082622151
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_16
+      name: FireDestroy_14
       rect:
         serializedVersion: 2
-        x: 337
-        y: 335
-        width: 221
-        height: 252
+        x: 2089
+        y: 632
+        width: 324
+        height: 337
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2af67835c98544480800000000000000
-      internalID: -8915903933847212126
+      spriteID: a74a4aed83d58ef00800000000000000
+      internalID: 1146268604000674938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_17
+      name: FireDestroy_15
       rect:
         serializedVersion: 2
-        x: 635
-        y: 335
-        width: 221
-        height: 252
+        x: 94
+        y: 98
+        width: 323
+        height: 337
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b97f96db15f3084f0800000000000000
-      internalID: -828592711133431909
+      spriteID: 3bbc924fe49648b30800000000000000
+      internalID: 4288668532988300211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireIdle_18
+      name: FireDestroy_16
       rect:
         serializedVersion: 2
-        x: 943
-        y: 337
-        width: 221
-        height: 252
+        x: 500
+        y: 0
+        width: 500
+        height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b40b45f9aae1d8770800000000000000
-      internalID: 8614575380396027979
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FireIdle_19
-      rect:
-        serializedVersion: 2
-        x: 1237
-        y: 335
-        width: 221
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1859b543a2694a330800000000000000
-      internalID: 3721264300126082433
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FireIdle_20
-      rect:
-        serializedVersion: 2
-        x: 35
-        y: 37
-        width: 221
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a32aae92a2309c8d0800000000000000
-      internalID: -2825723811571523014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FireIdle_21
-      rect:
-        serializedVersion: 2
-        x: 333
-        y: 35
-        width: 221
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d4cd40e9eecc2c7e0800000000000000
-      internalID: -1746608380240929715
+      spriteID: 1a94343fe8eb42210800000000000000
+      internalID: 1307379313020193185
       vertices: []
       indices: 
       edges: []
