@@ -8,6 +8,9 @@ public class MovementElements : MonoBehaviour
     [Tooltip("Speed swapping two elements")]
     [SerializeField]
     private float _speed = 1;
+    [Tooltip("Step to adjacent element")]
+    [SerializeField]
+    private float _step = 56;
 
     #endregion
 
@@ -20,10 +23,19 @@ public class MovementElements : MonoBehaviour
 
         if (_elementsPositions.Count == 2)
         {
-            var firstDirection = ChoiceDirection(_elementsPositions[0], _elementsPositions[1]);
-            var secondDirection = ChoiceDirection(_elementsPositions[1], _elementsPositions[0]);
+            bool isNeighbour = CheckingNeighbour(_elementsPositions[0], _elementsPositions[1]);
+            if (isNeighbour)
+            {
+                var firstDirection = ChoiceDirection(_elementsPositions[0], _elementsPositions[1]);
+                var secondDirection = ChoiceDirection(_elementsPositions[1], _elementsPositions[0]);
 
-            Swapping(firstDirection, secondDirection);
+                Swapping(firstDirection, secondDirection);
+            }
+            else
+            {
+                _elementsForSwap.Clear();
+                _elementsPositions.Clear();
+            }
         }
     }
 
@@ -119,5 +131,17 @@ public class MovementElements : MonoBehaviour
         }
 
         return direction;
+    }
+
+    private bool CheckingNeighbour(Vector3 firstPosition, Vector3 secondPosition)
+    {
+        bool isNeighbour = false;
+        var distance = firstPosition - secondPosition;
+        if(distance.magnitude <= _step)
+        {
+            isNeighbour = true;
+        }
+
+        return isNeighbour;
     }
 }
