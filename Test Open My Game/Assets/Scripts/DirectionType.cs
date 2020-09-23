@@ -1,5 +1,6 @@
 ﻿public enum DirectionType
 {
+    None,
     Right,
     Left,
     Top,

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6993177055795804995}
   - component: {fileID: 6993177055795804996}
   - component: {fileID: -5025235949275752020}
-  m_Layer: 8
-  m_Name: Water
+  m_Layer: 0
+  m_Name: WaterDestroy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ Animator:
   m_GameObject: {fileID: 6993177055795804998}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5cffb3a923002c14ababdda54154e059, type: 2}
+  m_Controller: {fileID: 9100000, guid: 16f29cda05328a54eb3d3424d0caba80, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -113,7 +113,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

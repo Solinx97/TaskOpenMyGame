@@ -16,16 +16,40 @@ public class MovementElements : MonoBehaviour
 
     private List<GameObject> _elementsForSwap = new List<GameObject>();
     private List<Vector2> _elementsPositions = new List<Vector2>();
+    private UserControl _userControl;
+
+    public float Step { get => _step; set => _step = value; }
+
+    private void Awake()
+    {
+        _userControl = GetComponent<UserControl>();
+    }
 
     private void Update()
     {
-        SelectionElements();
+        Executing();
+    }
 
+    public void Activate()
+    {
+        var ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var info = Physics2D.OverlapPoint(ray);
+        if (info != null && !_elementsForSwap.Contains(info.gameObject))
+        {
+            ToggleCollider(info.gameObject);
+            _elementsForSwap.Add(info.gameObject);
+            _elementsPositions.Add(info.gameObject.transform.position);
+        }
+    }
+
+    private void Executing()
+    {
         if (_elementsPositions.Count == 2)
         {
             bool isNeighbour = CheckingNeighbour(_elementsPositions[0], _elementsPositions[1]);
             if (isNeighbour)
             {
+                _userControl.enabled = false;
                 var firstDirection = ChoiceDirection(_elementsPositions[0], _elementsPositions[1]);
                 var secondDirection = ChoiceDirection(_elementsPositions[1], _elementsPositions[0]);
 
@@ -35,20 +59,6 @@ public class MovementElements : MonoBehaviour
             {
                 _elementsForSwap.Clear();
                 _elementsPositions.Clear();
-            }
-        }
-    }
-
-    private void SelectionElements()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var info = Physics2D.OverlapPoint(ray);
-            if (info != null)
-            {
-                _elementsForSwap.Add(info.gameObject);
-                _elementsPositions.Add(info.gameObject.transform.position);
             }
         }
     }
@@ -66,8 +76,11 @@ public class MovementElements : MonoBehaviour
 
         if (firstSwaped && secondSwapped)
         {
+            DestructionElements();
+
             _elementsForSwap.Clear();
             _elementsPositions.Clear();
+            _userControl.enabled = true;
         }
     }
 
@@ -75,8 +88,9 @@ public class MovementElements : MonoBehaviour
     {
         var position = obj.transform.position;
         bool isSwaped = false;
+        var distance = obj.transform.position - targetPosition;
 
-        if (position != targetPosition)
+        if (distance.magnitude > 0)
         {
             switch (direction)
             {
@@ -137,11 +151,36 @@ public class MovementElements : MonoBehaviour
     {
         bool isNeighbour = false;
         var distance = firstPosition - secondPosition;
-        if(distance.magnitude <= _step)
+        if(distance.magnitude <= Step)
         {
             isNeighbour = true;
         }
 
         return isNeighbour;
+    }
+
+    private void DestructionElements()
+    {
+        var destroyingElements = _elementsForSwap[0].GetComponentInParent<DestroyingElements>();
+        destroyingElements.DataInitialize(_elementsForSwap[0]);
+        destroyingElements.FindNeighboringElement(_elementsForSwap[0]);
+        destroyingElements.DestructionTowards();
+        destroyingElements.Cleaning();
+        destroyingElements.ToggleColliders();
+        ToggleCollider(_elementsForSwap[0]);
+
+        destroyingElements = _elementsForSwap[1].GetComponentInParent<DestroyingElements>();
+        destroyingElements.DataInitialize(_elementsForSwap[1]);
+        destroyingElements.FindNeighboringElement(_elementsForSwap[1]);
+        destroyingElements.DestructionTowards();
+        destroyingElements.Cleaning();
+        destroyingElements.ToggleColliders();
+        ToggleCollider(_elementsForSwap[1]);
+    }
+
+    private void ToggleCollider(GameObject target)
+    {
+        var collider = target.GetComponent<BoxCollider2D>();
+        collider.enabled = !collider.enabled;
     }
 }
