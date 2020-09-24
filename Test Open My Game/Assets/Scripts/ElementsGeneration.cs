@@ -32,15 +32,18 @@ public class ElementsGeneration : MonoBehaviour
 
     #endregion
 
+    private List<int> _splitLines;
+    private List<int> _splitCells;
+
     private void Start()
     {
-        var lines = Split(_cellsNumbers, GridType.Line);
-        var cells = Split(_cellsNumbers, GridType.Cell);
+        _splitLines = Split(_cellsNumbers, GridType.Line);
+        _splitCells = Split(_cellsNumbers, GridType.Cell);
 
-        Generation(lines, cells);
+        Generation();
     }
 
-    private void Generation(List<int> linesNumbers, List<int> cellsNumbers)
+    private void Generation()
     {
         float toX = 0;
         float toY = 0;
@@ -49,17 +52,9 @@ public class ElementsGeneration : MonoBehaviour
         {
             for (int j = 0; j < _cells; j++)
             {
-                if (linesNumbers.Contains(i + 1))
+                if (_splitLines.Contains(i + 1))
                 {
-                    var currentIndex = linesNumbers.IndexOf(i + 1);
-                    if (j + 1 == cellsNumbers[currentIndex])
-                    {
-                        var position = new Vector2(_startPosition.x + toX, _startPosition.y + toY);
-                        Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
-
-                        linesNumbers.Remove(linesNumbers[currentIndex]);
-                        cellsNumbers.Remove(cellsNumbers[currentIndex]);
-                    }
+                    SearchMatch(i + 1, j + 1, toX, toY);
                 }
 
                 toX += _stepToX;
@@ -92,5 +87,30 @@ public class ElementsGeneration : MonoBehaviour
         }
 
         return numbers;
+    }
+
+    private void SearchMatch(int indexToLine, int indexToCell, float toX, float toY)
+    {
+        int currentIndex = _splitLines.IndexOf(indexToLine);
+        if (indexToCell == _splitCells[currentIndex])
+        {
+            var position = new Vector2(_startPosition.x + toX, _startPosition.y + toY);
+            Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
+
+            _splitLines.Remove(_splitLines[currentIndex]);
+            _splitCells.Remove(_splitCells[currentIndex]);
+        }
+        else
+        {
+            int currentIndex1 = _splitCells.IndexOf(indexToCell, currentIndex);
+            if (currentIndex1 >= 0)
+            {
+                var position = new Vector2(_startPosition.x + toX, _startPosition.y + toY);
+                Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
+
+                _splitLines.Remove(_splitLines[currentIndex]);
+                _splitCells.Remove(_splitCells[currentIndex1]);
+            }
+        }
     }
 }
