@@ -40,10 +40,10 @@ public class ElementsGeneration : MonoBehaviour
         _splitLines = Split(_cellsNumbers, GridType.Line);
         _splitCells = Split(_cellsNumbers, GridType.Cell);
 
-        Generation();
+        Excute();
     }
 
-    private void Generation()
+    private void Excute()
     {
         float toX = 0;
         float toY = 0;
@@ -94,23 +94,24 @@ public class ElementsGeneration : MonoBehaviour
         int currentIndex = _splitLines.IndexOf(indexToLine);
         if (indexToCell == _splitCells[currentIndex])
         {
-            var position = new Vector2(_startPosition.x + toX, _startPosition.y + toY);
-            Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
-
-            _splitLines.Remove(_splitLines[currentIndex]);
-            _splitCells.Remove(_splitCells[currentIndex]);
+            Generation(currentIndex, currentIndex, toX, toY);
         }
         else
         {
             int currentIndex1 = _splitCells.IndexOf(indexToCell, currentIndex);
             if (currentIndex1 >= 0)
             {
-                var position = new Vector2(_startPosition.x + toX, _startPosition.y + toY);
-                Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
-
-                _splitLines.Remove(_splitLines[currentIndex]);
-                _splitCells.Remove(_splitCells[currentIndex1]);
+                Generation(currentIndex, currentIndex1, toX, toY);
             }
         }
+    }
+
+    private void Generation(int indexToLine, int indexToCell, float toX, float toY)
+    {
+        var position = new Vector2(_startPosition.x + toX, _startPosition.y + toY);
+        Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
+
+        _splitLines.Remove(_splitLines[indexToLine]);
+        _splitCells.Remove(_splitCells[indexToCell]);
     }
 }

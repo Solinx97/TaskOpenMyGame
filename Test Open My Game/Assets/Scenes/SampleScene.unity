@@ -283,8 +283,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _numberForDestrucation: 3
-  _step: 45
-  _rayCastDistance: 500
+  _step: 60
 --- !u!1 &887835790
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,8 +416,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _numberForDestrucation: 3
-  _step: 45
-  _rayCastDistance: 500
+  _step: 60
 --- !u!1 &1152563271
 GameObject:
   m_ObjectHideFlags: 0

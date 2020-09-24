@@ -76,7 +76,8 @@ public class MovementElements : MonoBehaviour
 
         if (firstSwaped && secondSwapped)
         {
-            DestructionElements();
+            DestructionElements(_elementsForSwap[0]);
+            DestructionElements(_elementsForSwap[1]);
 
             _elementsForSwap.Clear();
             _elementsPositions.Clear();
@@ -159,23 +160,17 @@ public class MovementElements : MonoBehaviour
         return isNeighbour;
     }
 
-    private void DestructionElements()
+    private void DestructionElements(GameObject element)
     {
-        var destroyingElements = _elementsForSwap[0].GetComponentInParent<DestroyingElements>();
-        destroyingElements.DataInitialize(_elementsForSwap[0]);
-        destroyingElements.FindNeighboringElement(_elementsForSwap[0]);
-        destroyingElements.DestructionTowards();
-        destroyingElements.Cleaning();
-        destroyingElements.ToggleColliders();
-        ToggleCollider(_elementsForSwap[0]);
+        var destroyingElements = element.GetComponentInParent<DestroyingElements>();
 
-        destroyingElements = _elementsForSwap[1].GetComponentInParent<DestroyingElements>();
-        destroyingElements.DataInitialize(_elementsForSwap[1]);
-        destroyingElements.FindNeighboringElement(_elementsForSwap[1]);
+        destroyingElements.DataInitialize(element);
+        destroyingElements.FindNeighboringElement(element);
         destroyingElements.DestructionTowards();
         destroyingElements.Cleaning();
         destroyingElements.ToggleColliders();
-        ToggleCollider(_elementsForSwap[1]);
+
+        ToggleCollider(element);
     }
 
     private void ToggleCollider(GameObject target)

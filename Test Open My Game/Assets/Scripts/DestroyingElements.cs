@@ -20,11 +20,6 @@ public class DestroyingElements : MonoBehaviour
     [SerializeField]
     private float _step = 45;
 
-    [Space()]
-
-    [SerializeField]
-    private float _rayCastDistance = 50;
-
     #endregion
 
     private List<GameObject> _leftElements = new List<GameObject>();
@@ -49,17 +44,12 @@ public class DestroyingElements : MonoBehaviour
 
     public void DestructionTowards()
     {
-        if (_leftElements.Count + _rightElements.Count >= _numberForDestrucation)
-        {
-            var elements = _leftElements.Concat(_rightElements).ToList();
-            Destruction(elements, DirectionType.Left);
-        }
+        var elements = _leftElements.Concat(_rightElements).ToList();
+        var elements1 = _topElements.Concat(_bottomElements).ToList();
+        var allElements = elements.Union(elements1).ToList();
 
-        if (_topElements.Count + _bottomElements.Count >= _numberForDestrucation)
-        {
-            var elements = _topElements.Concat(_bottomElements).ToList();
-            Destruction(elements, DirectionType.Right);
-        }
+        if (allElements.Count >= _numberForDestrucation)
+            Desctruction(allElements);
     }
 
     public void Cleaning()
@@ -107,96 +97,40 @@ public class DestroyingElements : MonoBehaviour
                 break;
         }
 
-        var hits = Physics2D.RaycastAll(elementTransform.position, direction,
-            _rayCastDistance, _elementLayer);
+        var hits = Physics2D.RaycastAll(elementTransform.position, direction, 
+            _step, _elementLayer);
 
         if (hits.Length > 0)
         {
-            Execute(elementTransform, hits, elementsForDestroy, directionType);
+            Execute(hits, elementsForDestroy);
         }
     }
     
-    private void Execute(Transform mainObject, RaycastHit2D[] hits, List<GameObject> elementsForDestroy,
-        DirectionType directionType)
+    private void Execute(RaycastHit2D[] hits, List<GameObject> elementsForDestroy)
     {
-        float currentStep = _step;
         for (int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].distance <= currentStep)
-            {
-                var collider = hits[i].collider.gameObject.GetComponent<BoxCollider2D>();
-                _colliders.Add(collider);
-                collider.enabled = false;
+            var collider = hits[i].collider.gameObject.GetComponent<BoxCollider2D>();
+            _colliders.Add(collider);
+            collider.enabled = false;
 
-                if (elementsForDestroy.Any() && !elementsForDestroy.Contains(hits[i].collider.gameObject))
-                {
-                    bool isMatchPositions = DirectionPositionCheck(mainObject, 
-                        hits[i].collider.transform, directionType);
+            elementsForDestroy.Add(hits[i].collider.gameObject);
+        }
 
-                    if (isMatchPositions)
-                        elementsForDestroy.Add(hits[i].collider.gameObject);
-                }
-                else if (!elementsForDestroy.Any())
-                {
-                    elementsForDestroy.Add(hits[i].collider.gameObject);
-                }
-
-                FindNeighboringElement(hits[i].collider.gameObject);
-            }
-
-            currentStep += _step;
+        for (int i = 0; i < elementsForDestroy.Count; i++)
+        {
+            FindNeighboringElement(elementsForDestroy[i]);
         }
     }
 
-    private void Destruction(List<GameObject> elements, DirectionType directionType)
+    private void Desctruction(List<GameObject> gameObjects)
     {
-        if (directionType == DirectionType.Left || directionType == DirectionType.Right)
+        foreach (var item in gameObjects)
         {
-            var test = elements.OrderBy(val => val.transform.position.y);
-            var firstPosition = test.First().transform.position;
-            var temp = new List<GameObject> { test.First() };
+            Instantiate(_destroyPref, item.transform.position,
+                item.transform.rotation, transform);
 
-            for (int i = 1; i < elements.Count; i++)
-            {
-                if (elements[i].transform.position == firstPosition)
-                {
-                    temp.Add(elements[i]);
-                }
-            }
-
-            foreach (var item in elements)
-            {
-                Instantiate(_destroyPref, item.transform.position,
-                    item.transform.rotation, transform);
-
-                Destroy(item.gameObject);
-            }
+            Destroy(item.gameObject);
         }
-
-        if (directionType == DirectionType.Top || directionType == DirectionType.Bottom)
-        {
-
-        }
-    }
-
-    private bool DirectionPositionCheck(Transform mainElement, Transform newElement,
-        DirectionType direction)
-    {
-        bool isMatchPositions = false;
-        var firstElementPosition = mainElement.position;
-        var newElementPosition = newElement.position;
-        
-        if (direction == DirectionType.Right || direction == DirectionType.Left)
-        {
-            if (newElementPosition.y == firstElementPosition.y)
-                isMatchPositions = true;
-        }
-        else if (direction == DirectionType.Top || direction == DirectionType.Bottom)
-        {
-            if (newElementPosition.x == firstElementPosition.x)
-                isMatchPositions = true;
-        }
-
-        return isMatchPositions;
     }
 }
