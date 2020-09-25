@@ -17,6 +17,10 @@ public class MovementElements : MonoBehaviour
     private List<GameObject> _elementsForSwap = new List<GameObject>();
     private List<Vector2> _elementsPositions = new List<Vector2>();
     private UserControl _userControl;
+    private bool _isNextItemEmpty;
+    private GameObject _element;
+    private Vector2 _emptyPosition;
+    private DirectionType _emptyDirection;
 
     public float Step { get => _step; set => _step = value; }
 
@@ -27,39 +31,128 @@ public class MovementElements : MonoBehaviour
 
     private void Update()
     {
-        Executing();
+        if (_isNextItemEmpty)
+        {
+            var isSwapped = Moving(_element, _emptyPosition, _emptyDirection);
+            if (isSwapped)
+            {
+                _isNextItemEmpty = false;
+
+                var normalization = GetComponent<Normalization>();
+                normalization.DataInitialization();
+                normalization.IsCheck = true;
+                ToggleCollider(_element, true);
+            }
+        }
+
+        if (_elementsPositions.Count == 2)
+            Executing();
     }
 
-    public void Activate()
+    public void Activate(GameObject target, DirectionType direction)
     {
-        var ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var info = Physics2D.OverlapPoint(ray);
-        if (info != null && !_elementsForSwap.Contains(info.gameObject))
+        ToggleCollider(target, false);
+
+        _isNextItemEmpty = FindNextItem(target.transform, direction);
+
+        if (_isNextItemEmpty && direction == DirectionType.Top)
+            _isNextItemEmpty = false;
+
+        if (!_isNextItemEmpty)
+            DataInitialize(target);
+
+        if (_isNextItemEmpty)
         {
-            ToggleCollider(info.gameObject);
-            _elementsForSwap.Add(info.gameObject);
-            _elementsPositions.Add(info.gameObject.transform.position);
+            _element = target;
+            _emptyDirection = direction;
+            var elementPosition = target.transform.position;
+
+            switch (direction)
+            {
+                case DirectionType.Right:
+                    _emptyPosition = new Vector2(elementPosition.x + _step, elementPosition.y);
+                    break;
+                case DirectionType.Left:
+                    _emptyPosition = new Vector2(elementPosition.x - _step, elementPosition.y);
+                    break;
+                case DirectionType.Top:
+                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y + _step);
+                    break;
+                case DirectionType.Bottom:
+                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y - _step);
+                    break;
+                default:
+                    break;
+            }
         }
+    }
+
+    public void DataInitialize(GameObject element)
+    {
+        _elementsForSwap.Add(element);
+        _elementsPositions.Add(element.transform.position);
+    }
+
+    private bool FindNextItem(Transform elementTransform, DirectionType directionType)
+    {
+        bool isNextItemEmpty = true;
+        var direction = new Vector2();
+
+        switch (directionType)
+        {
+            case DirectionType.Right:
+                direction = elementTransform.right;
+                break;
+            case DirectionType.Left:
+                direction = -elementTransform.right;
+                break;
+            case DirectionType.Top:
+                direction = elementTransform.up;
+                break;
+            case DirectionType.Bottom:
+                direction = -elementTransform.up;
+                break;
+            default:
+                break;
+        }
+
+        var hit = Physics2D.Raycast(elementTransform.position, direction, _step);
+
+        if (hit)
+        {
+            isNextItemEmpty = false;
+            DataInitialize(hit.collider.gameObject);
+            ToggleCollider(hit.collider.gameObject, false);
+        }
+        else
+        {
+            _elementsForSwap.Clear();
+            _elementsPositions.Clear();
+        }
+
+        return isNextItemEmpty;
     }
 
     private void Executing()
     {
-        if (_elementsPositions.Count == 2)
+        bool isNeighbour = CheckingNeighbour(_elementsPositions[0], _elementsPositions[1]);
+        if (isNeighbour)
         {
-            bool isNeighbour = CheckingNeighbour(_elementsPositions[0], _elementsPositions[1]);
-            if (isNeighbour)
-            {
-                _userControl.enabled = false;
-                var firstDirection = ChoiceDirection(_elementsPositions[0], _elementsPositions[1]);
-                var secondDirection = ChoiceDirection(_elementsPositions[1], _elementsPositions[0]);
+            _userControl.enabled = false;
+            var firstDirection = ChoiceDirection(_elementsPositions[0], _elementsPositions[1]);
+            var secondDirection = ChoiceDirection(_elementsPositions[1], _elementsPositions[0]);
 
-                Swapping(firstDirection, secondDirection);
-            }
-            else
+            Swapping(firstDirection, secondDirection);
+        }
+        else
+        {
+            foreach (var item in _elementsForSwap)
             {
-                _elementsForSwap.Clear();
-                _elementsPositions.Clear();
+                ToggleCollider(item, false);
             }
+
+            _elementsForSwap.Clear();
+            _elementsPositions.Clear();
         }
     }
 
@@ -81,7 +174,6 @@ public class MovementElements : MonoBehaviour
 
             _elementsForSwap.Clear();
             _elementsPositions.Clear();
-            _userControl.enabled = true;
         }
     }
 
@@ -168,14 +260,13 @@ public class MovementElements : MonoBehaviour
         destroyingElements.FindNeighboringElement(element);
         destroyingElements.DestructionTowards();
         destroyingElements.Cleaning();
-        destroyingElements.ToggleColliders();
 
-        ToggleCollider(element);
+        ToggleCollider(element, true);
     }
 
-    private void ToggleCollider(GameObject target)
+    private void ToggleCollider(GameObject target, bool state)
     {
         var collider = target.GetComponent<BoxCollider2D>();
-        collider.enabled = !collider.enabled;
+        collider.enabled = state;
     }
 }

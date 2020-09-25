@@ -63,6 +63,9 @@ public class ElementsGeneration : MonoBehaviour
             toY += _stepToY;
             toX = 0;
         }
+
+        var normalization = GetComponentInParent<Normalization>();
+        normalization.DataInitialization();
     }
 
     private List<int> Split(string[] elementsForSplit, GridType gridType)

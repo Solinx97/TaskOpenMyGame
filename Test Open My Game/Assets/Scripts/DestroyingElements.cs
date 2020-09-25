@@ -9,8 +9,6 @@ public class DestroyingElements : MonoBehaviour
     [Header("Element")]
 
     [SerializeField]
-    private GameObject _destroyPref = null;
-    [SerializeField]
     private LayerMask _elementLayer = 0;
     [SerializeField]
     private int _numberForDestrucation = 3;
@@ -50,6 +48,8 @@ public class DestroyingElements : MonoBehaviour
 
         if (allElements.Count >= _numberForDestrucation)
             Desctruction(allElements);
+        else
+            ToggleColliders(true);
     }
 
     public void Cleaning()
@@ -58,20 +58,6 @@ public class DestroyingElements : MonoBehaviour
         _rightElements.Clear();
         _topElements.Clear();
         _bottomElements.Clear();
-    }
-
-    public void ToggleColliders()
-    {
-        foreach (var item in _colliders)
-        {
-            if (item != null)
-            {
-                var collider = item.GetComponent<BoxCollider2D>();
-                collider.enabled = !collider.enabled;
-            }
-        }
-
-        _colliders.Clear();
     }
 
     private void SearchTowards(Transform elementTransform, DirectionType directionType,
@@ -127,10 +113,25 @@ public class DestroyingElements : MonoBehaviour
     {
         foreach (var item in gameObjects)
         {
-            Instantiate(_destroyPref, item.transform.position,
-                item.transform.rotation, transform);
-
-            Destroy(item.gameObject);
+            var cleaning = item.GetComponent<Cleaning>();
+            cleaning.Step = _step;
+            cleaning.StartAnimation();
         }
+
+        ToggleColliders(true);
+    }
+
+    private void ToggleColliders(bool state)
+    {
+        foreach (var item in _colliders)
+        {
+            if (item != null)
+            {
+                var collider = item.GetComponent<BoxCollider2D>();
+                collider.enabled = state;
+            }
+        }
+
+        _colliders.Clear();
     }
 }

@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UserControl : MonoBehaviour
+public class UserControl : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
     private MovementElements _movement;
 
@@ -9,11 +11,26 @@ public class UserControl : MonoBehaviour
         _movement = GetComponent<MovementElements>();
     }
 
-    private void Update()
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (Input.GetMouseButtonDown(0))
+        var target = eventData.pointerCurrentRaycast.gameObject;
+        if (target != null && Math.Abs(eventData.delta.x) > Math.Abs(eventData.delta.y))
         {
-            _movement.Activate();
+            if (eventData.delta.x > 0)
+                _movement.Activate(target, DirectionType.Right);
+            else
+                _movement.Activate(target, DirectionType.Left);
+        }
+        else if (target != null)
+        {
+            if (eventData.delta.y > 0)
+                _movement.Activate(target, DirectionType.Top);
+            else
+            {
+                _movement.Activate(target, DirectionType.Bottom);
+            }
         }
     }
+
+    public void OnDrag(PointerEventData eventData) {}
 }
