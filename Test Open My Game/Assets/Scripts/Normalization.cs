@@ -7,8 +7,6 @@ public class Normalization : MonoBehaviour
 
     [SerializeField]
     private float _speed = 1;
-    [SerializeField]
-    private float _step = 57;
 
     #endregion
 
@@ -16,14 +14,14 @@ public class Normalization : MonoBehaviour
     private List<Vector3> _newPositions = new List<Vector3>();
     private List<bool> _checkedItems = new List<bool>();
     private UserControl _userControl;
+    private MovementElements _movement;
 
     public bool IsCheck { get; set; }
-
-    public bool IsOffset { get; set; }
 
     private void Awake()
     {
         _userControl = GetComponent<UserControl>();
+        _movement = GetComponent<MovementElements>();
     }
 
     private void Update()
@@ -34,6 +32,11 @@ public class Normalization : MonoBehaviour
             {
                 IsCheck = false;
                 _userControl.enabled = true;
+
+                foreach (var item in _elementsTransform)
+                {
+                    _movement.DestructionElements(item.gameObject);
+                }
             }
 
             GetOffsetPosition();
@@ -94,7 +97,7 @@ public class Normalization : MonoBehaviour
             if (_elementsTransform[i] != null)
             {
                 var position = _elementsTransform[i].position;
-                if (_newPositions[i].y < position.y - _step)
+                if (_newPositions[i].y < position.y - _movement.Step)
                     _elementsTransform[i].position = new Vector2(position.x, position.y - _speed);
                 else
                     _checkedItems[i] = true;

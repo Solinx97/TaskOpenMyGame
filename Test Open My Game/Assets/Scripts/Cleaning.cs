@@ -49,6 +49,9 @@ public class Cleaning : MonoBehaviour
     {
         var normalization = GetComponentInParent<Normalization>();
         if (normalization != null)
+        {
+            normalization.DataInitialization();
             normalization.IsCheck = true;
+        }
     }
 }

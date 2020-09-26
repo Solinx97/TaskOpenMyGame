@@ -5,6 +5,18 @@ public class MovementElements : MonoBehaviour
 {
     #region UI
 
+    [Header("Grid")]
+
+    [SerializeField]
+    private int _lines = 5;
+    [SerializeField]
+    private int _cells = 5;
+    [Tooltip("Start position for elements generation on the grid")]
+    [SerializeField]
+    private Vector2 _startPosition = new Vector2();
+
+    [Header("Movement")]
+
     [Tooltip("Speed swapping two elements")]
     [SerializeField]
     private float _speed = 1;
@@ -23,6 +35,12 @@ public class MovementElements : MonoBehaviour
     private DirectionType _emptyDirection;
 
     public float Step { get => _step; set => _step = value; }
+
+    public int Lines { get => _lines; set => _lines = value; }
+    
+    public int Cells { get => _cells; set => _cells = value; }
+
+    public Vector2 StartPosition { get => _startPosition; set => _startPosition = value; }
 
     private void Awake()
     {
@@ -70,20 +88,29 @@ public class MovementElements : MonoBehaviour
             switch (direction)
             {
                 case DirectionType.Right:
-                    _emptyPosition = new Vector2(elementPosition.x + _step, elementPosition.y);
+                    _emptyPosition = new Vector2(elementPosition.x + Step, elementPosition.y);
                     break;
                 case DirectionType.Left:
-                    _emptyPosition = new Vector2(elementPosition.x - _step, elementPosition.y);
+                    _emptyPosition = new Vector2(elementPosition.x - Step, elementPosition.y);
                     break;
                 case DirectionType.Top:
-                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y + _step);
+                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y + Step);
                     break;
                 case DirectionType.Bottom:
-                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y - _step);
+                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y - Step);
                     break;
                 default:
                     break;
             }
+        }
+
+        bool isConstraint = CheckConstraints(_emptyPosition);
+        if (isConstraint && _isNextItemEmpty)
+        {
+            _isNextItemEmpty = false;
+            ToggleCollider(_element, true);
+            _elementsForSwap.Clear();
+            _elementsPositions.Clear();
         }
     }
 
@@ -91,6 +118,18 @@ public class MovementElements : MonoBehaviour
     {
         _elementsForSwap.Add(element);
         _elementsPositions.Add(element.transform.position);
+    }
+
+    public void DestructionElements(GameObject element)
+    {
+        var destroyingElements = element.GetComponentInParent<DestroyingElements>();
+
+        destroyingElements.DataInitialize(element);
+        destroyingElements.FindNeighboringElement(element);
+        destroyingElements.DestructionTowards();
+        destroyingElements.Cleaning();
+
+        ToggleCollider(element, true);
     }
 
     private bool FindNextItem(Transform elementTransform, DirectionType directionType)
@@ -116,7 +155,7 @@ public class MovementElements : MonoBehaviour
                 break;
         }
 
-        var hit = Physics2D.Raycast(elementTransform.position, direction, _step);
+        var hit = Physics2D.Raycast(elementTransform.position, direction, Step);
 
         if (hit)
         {
@@ -154,6 +193,17 @@ public class MovementElements : MonoBehaviour
             _elementsForSwap.Clear();
             _elementsPositions.Clear();
         }
+    }
+
+    private bool CheckConstraints(Vector2 newPosition)
+    {
+        bool isConstraint = true;
+        float stepConstraints = Step * Cells;
+
+        if (newPosition.x >= StartPosition.x && newPosition.x <= StartPosition.x + stepConstraints)
+            isConstraint = false;
+
+        return isConstraint;
     }
 
     private void Swapping(DirectionType first, DirectionType second)
@@ -250,18 +300,6 @@ public class MovementElements : MonoBehaviour
         }
 
         return isNeighbour;
-    }
-
-    private void DestructionElements(GameObject element)
-    {
-        var destroyingElements = element.GetComponentInParent<DestroyingElements>();
-
-        destroyingElements.DataInitialize(element);
-        destroyingElements.FindNeighboringElement(element);
-        destroyingElements.DestructionTowards();
-        destroyingElements.Cleaning();
-
-        ToggleCollider(element, true);
     }
 
     private void ToggleCollider(GameObject target, bool state)

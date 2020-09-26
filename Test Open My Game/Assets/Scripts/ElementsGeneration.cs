@@ -5,20 +5,6 @@ public class ElementsGeneration : MonoBehaviour
 {
     #region UI
 
-    [Header("Grid")]
-
-    [SerializeField]
-    private int _lines = 5;
-    [SerializeField]
-    private int _cells = 5;
-    [SerializeField]
-    private float _stepToX = 55;
-    [SerializeField]
-    private float _stepToY = 55;
-    [Tooltip("Start position for elements generation on the grid")]
-    [SerializeField]
-    private Vector2 _startPosition = new Vector2();
-
     [Header("Elements")]
 
     [SerializeField]
@@ -32,8 +18,14 @@ public class ElementsGeneration : MonoBehaviour
 
     #endregion
 
+    private MovementElements _movement;
     private List<int> _splitLines;
     private List<int> _splitCells;
+
+    private void Awake()
+    {
+        _movement = GetComponentInParent<MovementElements>();
+    }
 
     private void Start()
     {
@@ -48,19 +40,19 @@ public class ElementsGeneration : MonoBehaviour
         float toX = 0;
         float toY = 0;
 
-        for (int i = 0; i < _lines; i++)
+        for (int i = 0; i < _movement.Lines; i++)
         {
-            for (int j = 0; j < _cells; j++)
+            for (int j = 0; j < _movement.Cells; j++)
             {
                 if (_splitLines.Contains(i + 1))
                 {
                     SearchMatch(i + 1, j + 1, toX, toY);
                 }
 
-                toX += _stepToX;
+                toX += _movement.Step;
             }
 
-            toY += _stepToY;
+            toY += _movement.Step;
             toX = 0;
         }
 
@@ -111,7 +103,7 @@ public class ElementsGeneration : MonoBehaviour
 
     private void Generation(int indexToLine, int indexToCell, float toX, float toY)
     {
-        var position = new Vector2(_startPosition.x + toX, _startPosition.y + toY);
+        var position = new Vector2(_movement.StartPosition.x + toX, _movement.StartPosition.y + toY);
         Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
 
         _splitLines.Remove(_splitLines[indexToLine]);
