@@ -9,13 +9,23 @@ public class Levels : MonoBehaviour
 
     #endregion
 
+    private bool _isReload;
     private int _currentLevel;
+    private ElementsGeneration[] _elementsGenerations;
 
-    public bool IsCheck { get; set; } = true;
+    public bool IsCheck { get; set; }
+
+    public GameObject ActiveLevel { get; set; }
+
+    private void Start()
+    {
+        IsCheck = true;
+        TakeActiveLevel(0);
+    }
 
     private void Update()
     {
-        if (IsCheck)
+        if (IsCheck && !_isReload)
             LevelCompleted();
     }
 
@@ -27,7 +37,26 @@ public class Levels : MonoBehaviour
             _levels[_currentLevel].SetActive(false);
             _levels[_currentLevel + 1].SetActive(true);
             _currentLevel++;
+            TakeActiveLevel(_currentLevel);
         }
+    }
+
+    public void LevelRestart()
+    {
+        _isReload = true;
+
+        for (int i = 0; i < ActiveLevel.transform.childCount; i++)
+        {
+            ElementsDestroying(ActiveLevel.transform.GetChild(i));
+        }
+
+        for (int i = 0; i < _elementsGenerations.Length; i++)
+        {
+            _elementsGenerations[i].DataInitialize();
+            _elementsGenerations[i].Executing();
+        }
+
+        _isReload = false;
     }
 
     private void LevelCompleted()
@@ -42,10 +71,19 @@ public class Levels : MonoBehaviour
                     _levels[i].SetActive(false);
                     _levels[i + 1].SetActive(true);
                     _currentLevel++;
+                    TakeActiveLevel(_currentLevel);
                 }
 
                 break;
             }
+        }
+    }
+
+    private void ElementsDestroying(Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Destroy(parent.GetChild(i).gameObject);
         }
     }
 
@@ -58,5 +96,11 @@ public class Levels : MonoBehaviour
         }
 
         return count;
+    }
+
+    private void TakeActiveLevel(int level)
+    {
+        ActiveLevel = _levels[level];
+        _elementsGenerations = ActiveLevel.GetComponentsInChildren<ElementsGeneration>();
     }
 }

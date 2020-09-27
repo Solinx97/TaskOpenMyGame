@@ -31,13 +31,18 @@ public class ElementsGeneration : MonoBehaviour
 
     private void Start()
     {
-        _splitLines = Split(_cellsNumbers, GridType.Line);
-        _splitCells = Split(_cellsNumbers, GridType.Cell);
+        DataInitialize();
 
-        Excute();
+        Executing();
     }
 
-    private void Excute()
+    public void DataInitialize()
+    {
+        _splitLines = Split(_cellsNumbers, GridType.Line);
+        _splitCells = Split(_cellsNumbers, GridType.Cell);
+    }
+
+    public void Executing()
     {
         float toX = 0;
         float toY = 0;
