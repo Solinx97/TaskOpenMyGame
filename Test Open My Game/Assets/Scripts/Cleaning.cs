@@ -13,6 +13,7 @@ public class Cleaning : MonoBehaviour
 
     #endregion
 
+    private UserControl _userControl;
     private Animator _animator;
     private float _time;
     private bool _isStart;
@@ -22,6 +23,7 @@ public class Cleaning : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _userControl = GetComponentInParent<UserControl>();
     }
 
     private void Update()
@@ -32,6 +34,7 @@ public class Cleaning : MonoBehaviour
 
     public void StartAnimation()
     {
+        _userControl.enabled = false;
         _isStart = true;
 
         _animator.SetTrigger(_animationTrigger);
@@ -50,6 +53,7 @@ public class Cleaning : MonoBehaviour
         var normalization = GetComponentInParent<Normalization>();
         if (normalization != null)
         {
+            _userControl.enabled = true;
             normalization.DataInitialization();
             normalization.IsCheck = true;
         }

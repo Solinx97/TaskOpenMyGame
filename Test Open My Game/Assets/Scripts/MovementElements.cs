@@ -29,7 +29,8 @@ public class MovementElements : MonoBehaviour
     private List<GameObject> _elementsForSwap = new List<GameObject>();
     private List<Vector2> _elementsPositions = new List<Vector2>();
     private UserControl _userControl;
-    private bool _isNextItemEmpty;
+    private Normalization _normalization;
+    private bool _isNextEmpty;
     private GameObject _element;
     private Vector2 _emptyPosition;
     private DirectionType _emptyDirection;
@@ -45,20 +46,20 @@ public class MovementElements : MonoBehaviour
     private void Awake()
     {
         _userControl = GetComponent<UserControl>();
+        _normalization = GetComponent<Normalization>();
     }
 
     private void Update()
     {
-        if (_isNextItemEmpty)
+        if (_isNextEmpty)
         {
             var isSwapped = Moving(_element, _emptyPosition, _emptyDirection);
             if (isSwapped)
             {
-                _isNextItemEmpty = false;
+                _isNextEmpty = false;
 
-                var normalization = GetComponent<Normalization>();
-                normalization.DataInitialization();
-                normalization.IsCheck = true;
+                _normalization.DataInitialization();
+                _normalization.IsCheck = true;
                 ToggleCollider(_element, true);
             }
         }
@@ -69,17 +70,18 @@ public class MovementElements : MonoBehaviour
 
     public void Activate(GameObject target, DirectionType direction)
     {
+        _userControl.enabled = false;
         ToggleCollider(target, false);
 
-        _isNextItemEmpty = FindNextItem(target.transform, direction);
+        _isNextEmpty = FindNextItem(target.transform, direction);
 
-        if (_isNextItemEmpty && direction == DirectionType.Top)
-            _isNextItemEmpty = false;
+        if (_isNextEmpty && direction == DirectionType.Top)
+            _isNextEmpty = false;
 
-        if (!_isNextItemEmpty)
+        if (!_isNextEmpty)
             DataInitialize(target);
 
-        if (_isNextItemEmpty)
+        if (_isNextEmpty)
         {
             _element = target;
             _emptyDirection = direction;
@@ -105,9 +107,9 @@ public class MovementElements : MonoBehaviour
         }
 
         bool isConstraint = CheckConstraints(_emptyPosition);
-        if (isConstraint && _isNextItemEmpty)
+        if (isConstraint && _isNextEmpty)
         {
-            _isNextItemEmpty = false;
+            _isNextEmpty = false;
             ToggleCollider(_element, true);
             _elementsForSwap.Clear();
             _elementsPositions.Clear();
@@ -177,7 +179,6 @@ public class MovementElements : MonoBehaviour
         bool isNeighbour = CheckingNeighbour(_elementsPositions[0], _elementsPositions[1]);
         if (isNeighbour)
         {
-            _userControl.enabled = false;
             var firstDirection = ChoiceDirection(_elementsPositions[0], _elementsPositions[1]);
             var secondDirection = ChoiceDirection(_elementsPositions[1], _elementsPositions[0]);
 
@@ -224,6 +225,9 @@ public class MovementElements : MonoBehaviour
 
             _elementsForSwap.Clear();
             _elementsPositions.Clear();
+
+            _normalization.DataInitialization();
+            _normalization.IsCheck = true;
         }
     }
 

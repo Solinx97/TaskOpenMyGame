@@ -28,10 +28,11 @@ public class Normalization : MonoBehaviour
     {
         if (IsCheck)
         {
+            _userControl.enabled = false;
             if (!_checkedItems.Contains(false))
             {
-                IsCheck = false;
                 _userControl.enabled = true;
+                IsCheck = false;
 
                 foreach (var item in _elementsTransform)
                 {

@@ -19,12 +19,14 @@ public class ElementsGeneration : MonoBehaviour
     #endregion
 
     private MovementElements _movement;
+    private Levels _levels;
     private List<int> _splitLines;
     private List<int> _splitCells;
 
     private void Awake()
     {
         _movement = GetComponentInParent<MovementElements>();
+        _levels = GetComponentInParent<Levels>();
     }
 
     private void Start()
@@ -58,6 +60,8 @@ public class ElementsGeneration : MonoBehaviour
 
         var normalization = GetComponentInParent<Normalization>();
         normalization.DataInitialization();
+
+        _levels.IsCheck = true;
     }
 
     private List<int> Split(string[] elementsForSplit, GridType gridType)
