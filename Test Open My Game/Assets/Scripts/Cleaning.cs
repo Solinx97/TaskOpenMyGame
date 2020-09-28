@@ -32,6 +32,9 @@ public class Cleaning : MonoBehaviour
             Calculation();
     }
 
+    /// <summary>
+    /// Start animation "Destroy" for element if it is destroyed
+    /// </summary>
     public void StartAnimation()
     {
         _userControl.enabled = false;
@@ -40,6 +43,9 @@ public class Cleaning : MonoBehaviour
         _animator.SetTrigger(_animationTrigger);
     }
 
+    /// <summary>
+    /// Calculating the time after which the object is completely destroyed
+    /// </summary>
     private void Calculation()
     {
         _time += Time.deltaTime;

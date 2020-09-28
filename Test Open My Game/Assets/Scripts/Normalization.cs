@@ -56,6 +56,10 @@ public class Normalization : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Getting all active items in a level
+    /// </summary>
+    /// <param name="parent"></param>
     private void SetElements(Transform parent)
     {
         for (int i = 0; i < parent.childCount; i++)
@@ -65,6 +69,9 @@ public class Normalization : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checking all the elements to see if they are hanging over the void
+    /// </summary>
     public void GetOffsetPosition()
     {
         _newPositions.Clear();
@@ -91,6 +98,9 @@ public class Normalization : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Move an element down one step if there is a void under the element
+    /// </summary>
     private void ElementOffset()
     {
         for (int i = 0; i < _elementsTransform.Count; i++)

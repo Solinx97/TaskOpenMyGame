@@ -29,6 +29,9 @@ public class Levels : MonoBehaviour
             LevelCompleted();
     }
 
+    /// <summary>
+    /// Level change by pressing the button
+    /// </summary>
     public void NextLevel()
     {
         if (_currentLevel < _levels.Length - 1)
@@ -41,6 +44,9 @@ public class Levels : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reload the current level
+    /// </summary>
     public void LevelRestart()
     {
         _isReload = true;
@@ -59,6 +65,9 @@ public class Levels : MonoBehaviour
         _isReload = false;
     }
 
+    /// <summary>
+    /// Completion of the level, provided that all elements are destroyed
+    /// </summary>
     private void LevelCompleted()
     {
         for (int i = _currentLevel; i < _levels.Length - 1; i++)

@@ -93,34 +93,13 @@ public class MovementElements : MonoBehaviour
             DataInitialize(target);
 
         if (_isNextEmpty)
-        {
-            _element = target;
-            _emptyDirection = direction;
-            var elementPosition = target.transform.position;
-
-            switch (direction)
-            {
-                case DirectionType.Right:
-                    _emptyPosition = new Vector2(elementPosition.x + Step, elementPosition.y);
-                    break;
-                case DirectionType.Left:
-                    _emptyPosition = new Vector2(elementPosition.x - Step, elementPosition.y);
-                    break;
-                case DirectionType.Top:
-                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y + Step);
-                    break;
-                case DirectionType.Bottom:
-                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y - Step);
-                    break;
-                default:
-                    break;
-            }
-        }
+            SetEmptyObject(target, direction);
 
         bool isConstraint = CheckConstraints(_emptyPosition);
         if (isConstraint && _isNextEmpty)
         {
             _isNextEmpty = false;
+            _userControl.enabled = true;
             ToggleCollider(_element, true);
             _elementsForSwap.Clear();
             _elementsPositions.Clear();
@@ -143,6 +122,31 @@ public class MovementElements : MonoBehaviour
         destroyingElements.Cleaning();
 
         ToggleCollider(element, true);
+    }
+
+    private void SetEmptyObject(GameObject target, DirectionType direction)
+    {
+        _element = target;
+        _emptyDirection = direction;
+        var elementPosition = target.transform.position;
+
+        switch (direction)
+        {
+            case DirectionType.Right:
+                _emptyPosition = new Vector2(elementPosition.x + Step, elementPosition.y);
+                break;
+            case DirectionType.Left:
+                _emptyPosition = new Vector2(elementPosition.x - Step, elementPosition.y);
+                break;
+            case DirectionType.Top:
+                _emptyPosition = new Vector2(elementPosition.x, elementPosition.y + Step);
+                break;
+            case DirectionType.Bottom:
+                _emptyPosition = new Vector2(elementPosition.x, elementPosition.y - Step);
+                break;
+            default:
+                break;
+        }
     }
 
     private bool FindNextItem(Transform elementTransform, DirectionType directionType)

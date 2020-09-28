@@ -30,6 +30,10 @@ public class DestroyingElements : MonoBehaviour
         _topBottomElements.Add(element);
     }
 
+    /// <summary>
+    /// Finding adjacent elements of the same type to create a block of elements that will be destroyed
+    /// </summary>
+    /// <param name="selectedElement">Selected item to check</param>
     public void FindNeighboringElement(GameObject selectedElement)
     {
         SearchTowards(selectedElement.transform, DirectionType.Right, _leftRightElements);
@@ -38,6 +42,9 @@ public class DestroyingElements : MonoBehaviour
         SearchTowards(selectedElement.transform, DirectionType.Bottom, _topBottomElements);
     }
 
+    /// <summary>
+    /// Combining elements of the same type vertically and horizontally into one block and checking the number of elements
+    /// </summary>
     public void DestructionTowards()
     {
         var allElements = _leftRightElements.Union(_topBottomElements).ToList();
@@ -54,6 +61,12 @@ public class DestroyingElements : MonoBehaviour
         _topBottomElements.Clear();
     }
 
+    /// <summary>
+    /// Move the beam in the direction of the selected block's displacement and check for the presence of a second element of the same type
+    /// </summary>
+    /// <param name="elementTransform">Selected item transform</param>
+    /// <param name="directionType">Direction</param>
+    /// <param name="elementsForDestruction">Block elements one type for destruction</param>
     private void SearchTowards(Transform elementTransform, DirectionType directionType,
         List<GameObject> elementsForDestruction)
     {
@@ -85,7 +98,12 @@ public class DestroyingElements : MonoBehaviour
             Execute(hits, elementsForDestruction);
         }
     }
-    
+
+    /// <summary>
+    /// Adding adjacent elements of the same type to a block
+    /// </summary>
+    /// <param name="hits">All adjacent elements</param>
+    /// <param name="elementsForDestruction">Current block</param>
     private void Execute(RaycastHit2D[] hits, List<GameObject> elementsForDestruction)
     {
         for (int i = 0; i < hits.Length; i++)
@@ -119,6 +137,12 @@ public class DestroyingElements : MonoBehaviour
         ToggleColliders(true);
     }
 
+    /// <summary>
+    /// Checking elements vertically and horizontally from a common block of found identical elements for destruction
+    /// </summary>
+    /// <param name="elementsForDestroy">Block elements</param>
+    /// <param name="searchToX">Search on coord X or coord Y</param>
+    /// <returns></returns>
     private List<GameObject> SearchMatches(List<GameObject> elementsForDestroy, bool searchToX)
     {
         var sortedElements = new List<float>();
@@ -147,6 +171,10 @@ public class DestroyingElements : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// Enable or disable the collider of an element that is already checked
+    /// </summary>
+    /// <param name="state">On/off</param>
     private void ToggleColliders(bool state)
     {
         foreach (var item in _colliders)
