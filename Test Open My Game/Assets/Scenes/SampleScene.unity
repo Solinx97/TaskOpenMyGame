@@ -490,6 +490,7 @@ MonoBehaviour:
   _startPosition: {x: 322, y: -120}
   _speed: 0.5
   _step: 57
+  _ignoredLayerNumber: 2
 --- !u!114 &449010900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1045,6 +1046,7 @@ MonoBehaviour:
   _startPosition: {x: 322, y: -120}
   _speed: 0.5
   _step: 57
+  _ignoredLayerNumber: 2
 --- !u!114 &937498102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1604,6 +1606,7 @@ MonoBehaviour:
   _startPosition: {x: 322, y: -120}
   _speed: 0.5
   _step: 57
+  _ignoredLayerNumber: 2
 --- !u!114 &1407472811
 MonoBehaviour:
   m_ObjectHideFlags: 0

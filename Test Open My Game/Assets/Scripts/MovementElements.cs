@@ -24,6 +24,11 @@ public class MovementElements : MonoBehaviour
     [SerializeField]
     private float _step = 56;
 
+    [Header("Layer")]
+
+    [SerializeField]
+    private int _ignoredLayerNumber = 0;
+
     #endregion
 
     private List<GameObject> _elementsForSwap = new List<GameObject>();
@@ -31,6 +36,7 @@ public class MovementElements : MonoBehaviour
     private UserControl _userControl;
     private Normalization _normalization;
     private bool _isNextEmpty;
+    private bool _isTopEmpty;
     private GameObject _element;
     private Vector2 _emptyPosition;
     private DirectionType _emptyDirection;
@@ -51,7 +57,7 @@ public class MovementElements : MonoBehaviour
 
     private void Update()
     {
-        if (_isNextEmpty)
+        if (_isNextEmpty && !_isTopEmpty)
         {
             var isSwapped = Moving(_element, _emptyPosition, _emptyDirection);
             if (isSwapped)
@@ -70,13 +76,18 @@ public class MovementElements : MonoBehaviour
 
     public void Activate(GameObject target, DirectionType direction)
     {
+        _isTopEmpty = false;
         _userControl.enabled = false;
         ToggleCollider(target, false);
 
         _isNextEmpty = FindNextItem(target.transform, direction);
 
         if (_isNextEmpty && direction == DirectionType.Top)
-            _isNextEmpty = false;
+        {
+            _isTopEmpty = true;
+            _userControl.enabled = true;
+            ToggleCollider(target, true);
+        }
 
         if (!_isNextEmpty)
             DataInitialize(target);
@@ -157,7 +168,10 @@ public class MovementElements : MonoBehaviour
                 break;
         }
 
-        var hit = Physics2D.Raycast(elementTransform.position, direction, Step);
+        int layerMask = 1 << _ignoredLayerNumber;
+        layerMask = ~layerMask;
+
+        var hit = Physics2D.Raycast(elementTransform.position, direction, Step, layerMask);
 
         if (hit)
         {
