@@ -33,10 +33,11 @@ public class Background : MonoBehaviour
     private void Moving(Transform element)
     {
         float toY = Mathf.Sin(_speed);
+        var position = element.position;
         if (!_test)
-            element.position = new Vector2(element.position.x + _speed, element.position.y + toY);
+            element.position = new Vector3(position.x + _speed, position.y + toY, position.z);
         else
-            element.position = new Vector2(element.position.x + _speed, element.position.y - toY);
+            element.position = new Vector3(position.x + _speed, position.y - toY, position.z);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -44,6 +44,7 @@ public class ElementsGeneration : MonoBehaviour
 
     public void Executing()
     {
+        float height = Screen.height;
         float toX = 0;
         float toY = 0;
 
@@ -56,10 +57,10 @@ public class ElementsGeneration : MonoBehaviour
                     SearchMatch(i + 1, j + 1, toX, toY);
                 }
 
-                toX += _movement.Step;
+                toX += height * _movement.Step;
             }
 
-            toY += _movement.Step;
+            toY += height * _movement.Step;
             toX = 0;
         }
 
@@ -112,7 +113,8 @@ public class ElementsGeneration : MonoBehaviour
 
     private void Generation(int indexToLine, int indexToCell, float toX, float toY)
     {
-        var position = new Vector2(_movement.StartPosition.x + toX, _movement.StartPosition.y + toY);
+        var prefPosition = _elementPref.transform.position;
+        var position = new Vector3(_movement.StartPosition.x + toX, _movement.StartPosition.y + toY, prefPosition.z);
         Instantiate(_elementPref, position, _elementPref.transform.rotation, transform);
 
         _splitLines.Remove(_splitLines[indexToLine]);

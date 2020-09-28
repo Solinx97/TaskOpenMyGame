@@ -93,13 +93,16 @@ public class Normalization : MonoBehaviour
 
     private void ElementOffset()
     {
+        float height = Screen.height;
+        float step = height * _movement.Step;
+
         for (int i = 0; i < _elementsTransform.Count; i++)
         {
             if (_elementsTransform[i] != null)
             {
                 var position = _elementsTransform[i].position;
-                if (_newPositions[i].y < position.y - _movement.Step)
-                    _elementsTransform[i].position = new Vector2(position.x, position.y - _speed);
+                if (_newPositions[i].y < position.y - step)
+                    _elementsTransform[i].position = new Vector3(position.x, position.y - _speed, position.z);
                 else
                     _checkedItems[i] = true;
             }

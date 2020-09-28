@@ -20,7 +20,7 @@ public class MovementElements : MonoBehaviour
     [Tooltip("Speed swapping two elements")]
     [SerializeField]
     private float _speed = 1;
-    [Tooltip("Step to adjacent element")]
+    [Tooltip("The coefficient of the percentage (for example, if you need 5% - indicate 0.05)")]
     [SerializeField]
     private float _step = 56;
 
@@ -94,27 +94,7 @@ public class MovementElements : MonoBehaviour
 
         if (_isNextEmpty)
         {
-            _element = target;
-            _emptyDirection = direction;
-            var elementPosition = target.transform.position;
-
-            switch (direction)
-            {
-                case DirectionType.Right:
-                    _emptyPosition = new Vector2(elementPosition.x + Step, elementPosition.y);
-                    break;
-                case DirectionType.Left:
-                    _emptyPosition = new Vector2(elementPosition.x - Step, elementPosition.y);
-                    break;
-                case DirectionType.Top:
-                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y + Step);
-                    break;
-                case DirectionType.Bottom:
-                    _emptyPosition = new Vector2(elementPosition.x, elementPosition.y - Step);
-                    break;
-                default:
-                    break;
-            }
+            SetEmptyObject(target, direction);
         }
 
         bool isConstraint = CheckConstraints(_emptyPosition);
@@ -145,6 +125,34 @@ public class MovementElements : MonoBehaviour
         ToggleCollider(element, true);
     }
 
+    private void SetEmptyObject(GameObject target, DirectionType direction)
+    {
+        float height = Screen.height;
+        float step = height * Step;
+
+        _element = target;
+        _emptyDirection = direction;
+        var elementPosition = target.transform.position;
+
+        switch (direction)
+        {
+            case DirectionType.Right:
+                _emptyPosition = new Vector2(elementPosition.x + step, elementPosition.y);
+                break;
+            case DirectionType.Left:
+                _emptyPosition = new Vector2(elementPosition.x - step, elementPosition.y);
+                break;
+            case DirectionType.Top:
+                _emptyPosition = new Vector2(elementPosition.x, elementPosition.y + step);
+                break;
+            case DirectionType.Bottom:
+                _emptyPosition = new Vector2(elementPosition.x, elementPosition.y - step);
+                break;
+            default:
+                break;
+        }
+    }
+
     private bool FindNextItem(Transform elementTransform, DirectionType directionType)
     {
         bool isNextItemEmpty = true;
@@ -171,7 +179,10 @@ public class MovementElements : MonoBehaviour
         int layerMask = 1 << _ignoredLayerNumber;
         layerMask = ~layerMask;
 
-        var hit = Physics2D.Raycast(elementTransform.position, direction, Step, layerMask);
+        float height = Screen.height;
+        float step = height * Step;
+
+        var hit = Physics2D.Raycast(elementTransform.position, direction, step, layerMask);
 
         if (hit)
         {
@@ -212,8 +223,11 @@ public class MovementElements : MonoBehaviour
 
     private bool CheckConstraints(Vector2 newPosition)
     {
+        float height = Screen.height;
+        float step = height * Step;
+
         bool isConstraint = true;
-        float stepConstraints = Step * Cells;
+        float stepConstraints = step * Cells;
 
         if (newPosition.x >= StartPosition.x && newPosition.x <= StartPosition.x + stepConstraints)
             isConstraint = false;
@@ -247,11 +261,12 @@ public class MovementElements : MonoBehaviour
 
     private bool Moving(GameObject obj, Vector3 targetPosition, DirectionType direction)
     {
-        var position = obj.transform.position;
         bool isSwaped = false;
+        var position = obj.transform.position;
         var distance = obj.transform.position - targetPosition;
-
-        if (distance.magnitude > 0)
+        //print(distance.magnitude);
+        //print(distance.sqrMagnitude);
+        if (distance.magnitude > 100)
         {
             switch (direction)
             {
@@ -310,9 +325,12 @@ public class MovementElements : MonoBehaviour
 
     private bool CheckingNeighbour(Vector3 firstPosition, Vector3 secondPosition)
     {
+        float height = Screen.height;
+        float step = height * Step;
+
         bool isNeighbour = false;
         var distance = firstPosition - secondPosition;
-        if(distance.magnitude <= Step)
+        if(distance.magnitude <= step)
         {
             isNeighbour = true;
         }
